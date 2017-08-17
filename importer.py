@@ -194,11 +194,19 @@ def writeToFile():
         with open(OUTPUTFILE, 'w') as f:
             f.writelines(out_file)
 
+def resetGlobals():
+    global updateCommandStrings
+    global updateCommands
+    global in_file
+    updateCommandStrings = list()
+    updateCommands = list()
+    in_file = list()
 while True:
     print "start import"
     checkFiles()
     getRawCommands()  
     buildCommandObjects()
     writeToFile()
+    resetGlobals()
     print "end import, waiting..."
     time.sleep(10)

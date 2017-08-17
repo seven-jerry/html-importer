@@ -1,9 +1,6 @@
 import os
 import sys
 import time
-updateCommandStrings = list()
-updateCommands = list()
-in_file = list()
 #   this script imports files into a html document(js,css)
 #   1. make copy of the html file
 #   2. specify INPUTFILE and OUTPUTFILE
@@ -38,6 +35,9 @@ in_file = list()
 #OUTPUTFILE = "index.html"
 INPUTFILE = "index_in.html"
 OUTPUTFILE = "index.html"
+updateCommandStrings = list()
+updateCommands = list()
+in_file = list()
 
 #    HELPER OBJECTS
 class UpdateCommnad(object):
@@ -194,11 +194,19 @@ def writeToFile():
         with open(OUTPUTFILE, 'w') as f:
             f.writelines(out_file)
 
+def resetGlobals():
+    global updateCommandStrings
+    global updateCommands
+    global in_file
+    updateCommandStrings = list()
+    updateCommands = list()
+    in_file = list()
 while True:
     print "start import"
     checkFiles()
     getRawCommands()  
     buildCommandObjects()
     writeToFile()
+    resetGlobals()
     print "end import, waiting..."
-    time.sleep(10)
+    time.sleep(2)
