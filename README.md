@@ -1,6 +1,8 @@
-# html_importer
-
+# html importer
  this script imports files ( js,css ) into a html document
+ import js file to html
+ import css file to html
+
 
        before:
            <html>
