@@ -44,7 +44,7 @@ class UpdateCommnad(object):
     lineNumber=""
     type=""
     dir=""
-    exclude=""
+    exclude=list()
     template=""
     filePaths=list()
 
@@ -76,13 +76,27 @@ class StringBuffer:
             resultString = resultString + char;
         return resultString
 
-
-#     SCRIPT
-
-
 def addSubstringAfterString(baseString,afterString,addString):
     pos = baseString.index(afterString) + len(afterString)
     return baseString[:pos] + addString + baseString[pos:]
+
+def hasLastPathComponent(path,component):
+    if component not in path:
+        return False
+    componentPos = path.rindex(component)
+    componentlength = len(component)
+    if componentPos + componentlength is len(path):
+        return True
+    return False
+
+def inArray(stringArray,string):
+    for everyString in stringArray:
+        if everyString in string:
+            return True
+    return False
+
+
+#     SCRIPT
 
 # check if the give input and out files are valid
 def checkFiles():
@@ -131,8 +145,10 @@ def buildCommandObjects():
         commandObject.dir = buffer.readTillChar(";",":")
     
         buffer.setPosFromSubString("exclude:")
-        commandObject.exclude = buffer.readTillChar(";",":")
-    
+        excludeString = buffer.readTillChar(";",":")
+        if len(excludeString) > 0:
+             commandObject.exclude = excludeString.split(",")
+        
         buffer.setPosFromSubString("template:")
         commandObject.template = buffer.readTillChar(";","}")
          
@@ -145,11 +161,13 @@ def findFiles(dir,type,exclude,array):
         path = os.path.join(dir, fname)
         if os.path.isdir(path):      
             findFiles(path,type,exclude,array)
-        if type in path and  len(exclude) > 0:
-            if exclude not in path:
+            
+        if len(exclude) > 0:            
+            if  hasLastPathComponent(path,type) and not inArray(exclude,path):
                 array.append(path);
         elif type in path :
            array.append(path);
+           
 # sort by insertorder
 def sort(array):
     distarray = list()
@@ -209,4 +227,4 @@ while True:
     writeToFile()
     resetGlobals()
     print "end import, waiting..."
-    time.sleep(2)
+    time.sleep(10)
