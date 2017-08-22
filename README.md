@@ -8,7 +8,7 @@
 
     <html>
         <head>
-        <!-- {SVN_AUTO_IMPORT type:.js; dir:js; exclude:; template:<script src="%PATH"</script>;} -->
+        <!-- {SVN_AUTO_IMPORT type:.js; dir:../tsc_out; exclude:; template:<script src="%PATH"</script>;} -->
         </head>
         
 after:
